@@ -1,0 +1,105 @@
+/* Stile base comune a tutte le pagine */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+  color: #222;
+}
+
+/* Menu in alto */
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+  background: #222;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* Presentazione: foto e testo affiancati */
+#presentazione {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+}
+
+#foto {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Card delle passioni */
+#lista-passioni {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.card {
+  flex: 1 1 250px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+/* Barre delle competenze */
+.competenza {
+  margin-bottom: 12px;
+}
+
+.barra {
+  background: #ddd;
+  height: 12px;
+  border-radius: 6px;
+}
+
+.barra-piena {
+  background: #2a6fdb;
+  height: 100%;
+  border-radius: 6px;
+}
+
+/* Messaggio di errore */
+#messaggio-errore {
+  background: #ffd9d9;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+/* Footer */
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: #eee;
+}
+
+footer img {
+  height: 50px;
+}
