@@ -258,3 +258,6 @@ if (document.getElementById("lista-dati")) {
 if (document.getElementById("lista-stage")) {
   avviaStage(); // siamo nella pagina Stage
 }
+
+
+/*fine*/
