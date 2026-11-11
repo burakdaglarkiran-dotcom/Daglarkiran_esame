@@ -103,3 +103,43 @@ footer {
 footer img {
   height: 50px;
 }
+
+/* Pagina CV */
+.voce-cv {
+  border-left: 4px solid #2a6fdb;
+  padding-left: 12px;
+  margin-bottom: 16px;
+}
+
+.voce-cv h3,
+.voce-cv p {
+  margin: 0 0 4px 0;
+}
+
+.sottotitolo {
+  font-weight: bold;
+}
+
+.periodo {
+  color: #666;
+  font-size: 0.9em;
+}
+
+/* Pagina Stage */
+.blocco-stage {
+  margin-bottom: 32px;
+}
+
+.blocco-stage .card {
+  margin-bottom: 16px;
+}
+
+.blocco-stage ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+/* Mantiene gli a capo e i paragrafi scritti nella cella */
+.relazione {
+  white-space: pre-line;
+}
