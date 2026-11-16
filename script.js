@@ -1,4 +1,3 @@
-//Sito esame
 // Link CSV del foglio "Home" (pubblicato sul web)
 const URL_HOME = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTeDf_9ZJmVH-OkGVB5ajSLmqitdVJEFsmrHoXKi2phSfcqlUPDZNp7VspcEur7RvSGAI5gKjALZrMW/pub?gid=0&single=true&output=csv";
 
@@ -259,5 +258,14 @@ if (document.getElementById("lista-stage")) {
   avviaStage(); // siamo nella pagina Stage
 }
 
+// ---------- MENU: EVIDENZIO LA PAGINA APERTA ----------
 
-/*fine*/
+// Prendo il nome del file della pagina (se manca, siamo nella home)
+const paginaCorrente = location.pathname.split("/").pop() || "index.html";
+
+// Aggiungo la classe "attivo" al link che porta a questa pagina
+document.querySelectorAll("nav a").forEach(link => {
+  if (link.getAttribute("href") === paginaCorrente) {
+    link.classList.add("attivo");
+  }
+});

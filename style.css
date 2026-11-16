@@ -1,115 +1,342 @@
-/* Sito esame */
-/* Stile base comune a tutte le pagine */
+/* Font moderno: Plus Jakarta Sans (se non si carica, il browser usa un font di sistema) */
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+/* ---------- COLORI E MISURE (cambia qui per cambiare tutto il sito) ---------- */
+:root {
+  --inchiostro: #0e1a3a;    /* blu molto scuro: hero e footer */
+  --brand: #3558f0;         /* blu principale: pulsanti, punti, barre */
+  --brand-scuro: #2742c4;   /* blu per i testi colorati */
+  --azzurro: #eaf0ff;       /* azzurro chiarissimo: sfondi leggeri */
+  --menta: #2dd4b0;         /* secondo colore: piccoli dettagli */
+  --sfondo: #f5f7fb;        /* sfondo della pagina */
+  --bianco: #ffffff;        /* sfondo delle card */
+  --testo: #1e2742;         /* testo principale */
+  --grigio: #5d6785;        /* testo secondario */
+  --linea: #e3e8f2;         /* linee sottili */
+  --ombra: 0 8px 24px rgba(14, 26, 58, 0.07);
+  --ombra-forte: 0 14px 34px rgba(14, 26, 58, 0.14);
+}
+
+/* ---------- STILE BASE ---------- */
 * {
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  line-height: 1.5;
-  color: #222;
+html {
+  scroll-behavior: smooth;
 }
 
-/* Menu in alto */
+body {
+  margin: 0;
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.7;
+  color: var(--testo);
+  background: var(--sfondo);
+}
+
+img {
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--brand);
+  color: var(--bianco);
+}
+
+/* ---------- MENU IN ALTO ---------- */
 nav {
+  position: sticky;            /* resta visibile quando scorri */
+  top: 0;
+  z-index: 20;
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  padding: 16px;
-  background: #222;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px); /* effetto vetro */
+  border-bottom: 1px solid var(--linea);
 }
 
 nav a {
-  color: white;
+  padding: 8px 18px;
+  border-radius: 999px;
+  color: var(--grigio);
+  font-weight: 600;
+  font-size: 0.95rem;
   text-decoration: none;
+  transition: background 0.2s, color 0.2s;
 }
 
+nav a:hover {
+  background: var(--azzurro);
+  color: var(--brand-scuro);
+}
+
+/* Il link della pagina aperta (la classe la aggiunge script.js) */
+nav a.attivo {
+  background: var(--brand);
+  color: var(--bianco);
+}
+
+/* Bordo visibile per chi naviga con la tastiera */
+a:focus-visible {
+  outline: 3px solid var(--menta);
+  outline-offset: 2px;
+}
+
+/* ---------- CONTENUTO ---------- */
 main {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 40px 20px 80px;
 }
 
-/* Presentazione: foto e testo affiancati */
+/* Titolo delle pagine CV e Stage */
+main > h1 {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 16px 0 8px 0;
+}
+
+/* Titoli di sezione, con una piccola barra sotto */
+main > h2,
+main section > h2 {
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
+  margin: 64px 0 24px 0;
+}
+
+main > h2::after,
+main section > h2::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 4px;
+  margin-top: 8px;
+  border-radius: 2px;
+  background: var(--brand);
+}
+
+/* ---------- HOME: PRIMA SCHERMATA ---------- */
 #presentazione {
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
   align-items: center;
+  gap: 40px;
+  padding: 56px 48px;
+  border-radius: 28px;
+  color: var(--bianco);
+  background:
+    radial-gradient(circle at 85% 10%, rgba(53, 88, 240, 0.55), transparent 55%),
+    var(--inchiostro);
+  box-shadow: var(--ombra-forte);
+}
+
+#presentazione > div {
+  flex: 1 1 320px;
+}
+
+#nome {
+  font-size: clamp(2.2rem, 6vw, 3.6rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin: 0 0 12px 0;
+}
+
+#presentazione h2 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--menta);
+  margin: 0 0 20px 0;
+}
+
+#testo {
+  max-width: 520px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
 }
 
 #foto {
-  width: 200px;
-  height: 200px;
+  width: 220px;
+  height: 220px;
   object-fit: cover;
   border-radius: 50%;
+  border: 5px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
-/* Card delle passioni */
+@keyframes entra {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+/* Animazione di comparsa, uguale in tutte le pagine.
+   I contenuti creati da JavaScript partono quando vengono inseriti nella pagina. */
+#presentazione,
+main > h1,
+main > h2,
+main section > h2,
+#lista-passioni .card,
+#lista-competenze,
+#lista-dati,
+.voce-cv,
+.blocco-stage {
+  animation: entra 0.6s ease-out backwards;   /* backwards: a fine animazione l'elemento torna libero */
+}
+
+/* Le card e le voci compaiono una dopo l'altra */
+#lista-passioni .card:nth-child(2),
+.voce-cv:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+#lista-passioni .card:nth-child(3),
+.voce-cv:nth-child(3) {
+  animation-delay: 0.24s;
+}
+
+.blocco-stage:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+/* ---------- CARD ---------- */
 #lista-passioni {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
 }
 
 .card {
-  flex: 1 1 250px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 12px;
+  background: var(--bianco);
+  border: 1px solid var(--linea);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: var(--ombra);
+  transition: box-shadow 0.25s, border-color 0.25s;
+}
+
+.card:hover {
+  border-color: var(--brand);
+  box-shadow: var(--ombra-forte);
 }
 
 .card img {
+  display: block;
   width: 100%;
-  height: 160px;
+  height: 180px;
   object-fit: cover;
+  border-radius: 14px;
 }
 
-/* Barre delle competenze */
-.competenza {
-  margin-bottom: 12px;
+.card h2,
+.card h3 {
+  margin: 16px 0 4px 0;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+}
+
+.card p {
+  margin: 0 0 4px 0;
+  color: var(--grigio);
+}
+
+/* ---------- COMPETENZE ---------- */
+#lista-competenze {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px 48px;
+  padding: 32px;
+  background: var(--bianco);
+  border: 1px solid var(--linea);
+  border-radius: 20px;
+  box-shadow: var(--ombra);
+}
+
+.competenza p {
+  margin: 0 0 8px 0;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
 .barra {
-  background: #ddd;
-  height: 12px;
-  border-radius: 6px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--azzurro);
+  overflow: hidden;
 }
 
 .barra-piena {
-  background: #2a6fdb;
   height: 100%;
-  border-radius: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brand), var(--menta));
+  animation: riempi 1s ease-out;    /* la barra si riempie da sinistra */
 }
 
-/* Messaggio di errore */
+@keyframes riempi {
+  from {
+    width: 0;
+  }
+}
+
+/* ---------- MESSAGGIO DI ERRORE ---------- */
 #messaggio-errore {
-  background: #ffd9d9;
-  padding: 12px;
-  border-radius: 6px;
+  margin: 0 0 24px 0;
+  padding: 14px 18px;
+  border-left: 5px solid #d62828;
+  border-radius: 10px;
+  background: #fdecec;
+  color: #8f1d1d;
 }
 
-/* Footer */
-footer {
+/* ---------- PAGINA CV ---------- */
+#lista-dati {
+  padding: 8px 28px;
+  background: var(--bianco);
+  border: 1px solid var(--linea);
+  border-radius: 20px;
+  box-shadow: var(--ombra);
+}
+
+#lista-dati p {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  padding: 16px;
-  background: #eee;
+  gap: 4px 12px;
+  margin: 0;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--linea);
 }
 
-footer img {
-  height: 50px;
+#lista-dati p:last-child {
+  border-bottom: none;
 }
 
-/* Pagina CV */
+#lista-dati strong {
+  min-width: 150px;
+  color: var(--brand-scuro);
+}
+
+/* Istruzione ed esperienze: linea del tempo con un punto per ogni voce */
 .voce-cv {
-  border-left: 4px solid #2a6fdb;
-  padding-left: 12px;
-  margin-bottom: 16px;
+  position: relative;
+  margin: 0 0 24px 8px;
+  padding: 0 0 8px 28px;
+  border-left: 2px solid var(--linea);
+}
+
+.voce-cv::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--brand);
+  border: 3px solid var(--sfondo);
 }
 
 .voce-cv h3,
@@ -117,32 +344,154 @@ footer img {
   margin: 0 0 4px 0;
 }
 
+.voce-cv h3 {
+  font-size: 1.15rem;
+}
+
 .sottotitolo {
-  font-weight: bold;
+  font-weight: 600;
+  color: var(--brand-scuro);
 }
 
 .periodo {
-  color: #666;
-  font-size: 0.9em;
+  display: inline-block;
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: var(--azzurro);
+  color: var(--brand-scuro);
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
-/* Pagina Stage */
+/* ---------- PAGINA STAGE ---------- */
 .blocco-stage {
-  margin-bottom: 32px;
+  margin-bottom: 72px;
 }
 
+/* La card dello stage: immagine a tutta larghezza, testi con i margini */
 .blocco-stage .card {
-  margin-bottom: 16px;
+  margin-bottom: 32px;
+  padding: 0 0 28px 0;
+  overflow: hidden;
+}
+
+.blocco-stage .card:hover {
+  border-color: var(--linea);   /* qui la card non cambia al passaggio del mouse */
+  box-shadow: var(--ombra);
+}
+
+.blocco-stage .card > * {
+  margin-left: 28px;
+  margin-right: 28px;
+}
+
+.blocco-stage .card > img {
+  width: 100%;
+  height: 260px;
+  margin: 0 0 24px 0;
+  border-radius: 0;
+}
+
+.blocco-stage .card > :first-child:not(img) {
+  margin-top: 28px;
+}
+
+.blocco-stage .card h2 {
+  font-size: 1.7rem;
+  margin-top: 0;
 }
 
 .blocco-stage ul {
-  margin: 0;
-  padding-left: 20px;
+  margin-top: 8px;
+  padding-left: 48px;           /* 28px di margine + 20px per i puntini */
+  color: var(--testo);
+}
+
+.blocco-stage li {
+  margin-bottom: 6px;
+}
+
+.blocco-stage > h3 {
+  margin: 0 0 12px 0;
+  font-size: 1.3rem;
 }
 
 /* Mantiene gli a capo e i paragrafi scritti nella cella */
 .relazione {
+  max-width: 68ch;              /* righe non troppo lunghe: si legge meglio */
   white-space: pre-line;
+  font-size: 1.05rem;
 }
 
-/*fine*/
+/* ---------- FOOTER ---------- */
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 40px max(20px, calc((100% - 960px) / 2));
+  background: var(--inchiostro);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+}
+
+footer p {
+  margin: 2px 0;
+}
+
+footer img {
+  height: 44px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: var(--bianco);    /* sfondo bianco: il logo si vede sempre */
+}
+
+/* ---------- TABLET E TELEFONO ---------- */
+@media (max-width: 700px) {
+  main {
+    padding: 24px 16px 56px;
+  }
+
+  #presentazione {
+    justify-content: center;
+    gap: 28px;
+    padding: 36px 24px;
+    text-align: center;
+  }
+
+  #foto {
+    width: 170px;
+    height: 170px;
+  }
+
+  #testo {
+    margin: 0 auto;
+  }
+
+  #lista-competenze {
+    padding: 24px 20px;
+  }
+
+  .blocco-stage .card > img {
+    height: 200px;
+  }
+
+  .blocco-stage .card > * {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .blocco-stage ul {
+    padding-left: 40px;
+  }
+}
+
+/* Chi non vuole animazioni non le vede */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
